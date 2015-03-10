@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="entity_listeners.listeners.dir">W3build\EntityListenersBundle\EventListener</parameter>
+    </parameters>
+
+    <services>
+
+        <service id="entity_listeners.url.listener" class="%entity_listeners.listeners.dir%\UrlListener">
+            <tag name="doctrine.event_subscriber" connection="default" />
+        </service>
+
+        <service id="entity_listeners.perex.listener" class="%entity_listeners.listeners.dir%\PerexListener">
+            <tag name="doctrine.event_subscriber" connection="default" />
+            <tag name="annotations.reader" connection="default" />
+        </service>
+
+        <service id="entity_listeners.fake_delete" class="W3build\EntityListenersBundle\Service\FakeDelete">
+            <argument type="service" id="doctrine.orm.default_entity_manager" />
+        </service>
+
+    </services>
+
+</container>
